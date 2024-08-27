@@ -61,3 +61,4 @@ build
 doxygen
 
 *.txt
+*.bin
