@@ -6,6 +6,7 @@ BUILD_DIR = ./build
 SRC_DIR = ./src
 COMPILER = gcc
 
+debug_ = 1
 
 FLAGS = -ggdb3 -O0 -Wall -Wextra -Waggressive-loop-optimizations \
 		-Wmissing-declarations -Wcast-align -Wcast-qual -Wchar-subscripts \
@@ -29,11 +30,11 @@ RELEASE_FLAGS = -DNDEBUG
 FLAGS += $(if $(debug_),$(DEBUG_FLAGS),$(RELEASE_FLAGS))
 
 
-DIRS = 
+DIRS = streams utils zipping
 BUILD_DIRS = $(DIRS:%=$(BUILD_DIR)/%)
 
 
-SOURCES = main.c
+SOURCES = main.c streams/streams.c zipping/zipping.c
 
 SOURCES_REL_PATH = $(SOURCES:%=$(SRC_DIR)/%)
 OBJECTS_REL_PATH = $(SOURCES:%.c=$(BUILD_DIR)/%.o)
@@ -49,7 +50,7 @@ start:
 
 
 $(PROJECT_NAME).out: $(OBJECTS_REL_PATH)
-	$(COMPILER) $(FLAGS) -o $@ $^
+	@$(COMPILER) $(FLAGS) -o $@ $^
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.c | $(BUILD_DIRS)
 	@$(COMPILER) $(FLAGS) -c -MMD -MP $< -o $@ 
