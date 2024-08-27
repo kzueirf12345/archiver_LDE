@@ -5,7 +5,8 @@
 enum ErrorCode
 {
     SUCCESS,
-    FAILURE
+    FAILURE,
+    INCORRECT
 };
 
 

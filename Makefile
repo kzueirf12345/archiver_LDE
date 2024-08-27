@@ -30,11 +30,11 @@ RELEASE_FLAGS = -DNDEBUG
 FLAGS += $(if $(debug_),$(DEBUG_FLAGS),$(RELEASE_FLAGS))
 
 
-DIRS = streams utils zipping
+DIRS = streams utils zipping unzipping
 BUILD_DIRS = $(DIRS:%=$(BUILD_DIR)/%)
 
 
-SOURCES = main.c streams/streams.c zipping/zipping.c
+SOURCES = main.c streams/streams.c zipping/zipping.c unzipping/unzipping.c
 
 SOURCES_REL_PATH = $(SOURCES:%=$(SRC_DIR)/%)
 OBJECTS_REL_PATH = $(SOURCES:%.c=$(BUILD_DIR)/%.o)

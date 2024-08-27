@@ -10,12 +10,12 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
 
 
     char prev_symbol = (char)fgetc(stream_in);
-    char symbol = EOF;
+    char cur_symbol = EOF;
     unsigned symbol_count = 1;
     while (!feof(stream_in) && !ferror(stream_in))
     {
-        symbol = (char)fgetc(stream_in);
-        if (symbol != prev_symbol)
+        cur_symbol = (char)fgetc(stream_in);
+        if (cur_symbol != prev_symbol)
         {
             if (fprintf(stream_out, "(%u)%c", symbol_count, prev_symbol) <= 0)
                 return FAILURE;
@@ -26,7 +26,7 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
         {
             ++symbol_count;
         }
-        prev_symbol = symbol;
+        prev_symbol = cur_symbol;
     }
     return ferror(stream_in) ? FAILURE : SUCCESS;
 }
