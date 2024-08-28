@@ -74,5 +74,11 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
             ++repeat_count;
         }
     }
+
+    //NOTE - last symbols
+    norepeat_buf[--norepeat_count] = '\0';
+    if (norepeat_count > 0 && fprintf(stream_out, "%c%s", norepeat_count, norepeat_buf) <= 0)
+        return ERROR_FAILURE;
+
     return ferror(stream_in) ? ERROR_FAILURE : ERROR_SUCCESS;
 }
