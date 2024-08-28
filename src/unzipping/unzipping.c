@@ -8,11 +8,11 @@
 
 enum UnzippingState
 {
-    START,
-    OPEN_BRAKET,
-    SYMBOL_COUNT,
-    CLOSE_BRAKET,
-    SYMBOL
+    UNZIPPING_STATE_START,
+    UNZIPPING_STATE_OPEN_BRAKET,
+    UNZIPPING_STATE_SYMBOL_COUNT,
+    UNZIPPING_STATE_CLOSE_BRAKET,
+    UNZIPPING_STATE_SYMBOL
 };
 
 enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
@@ -25,7 +25,7 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
 
     size_t count_symbol_size = 0;
     char count_symbol_buf[MAX_SYMBOL_COUNT_LEN] = {};
-    enum UnzippingState unzipping_state = START;
+    enum UnzippingState unzipping_state = UNZIPPING_STATE_START;
     char prev_symbol = EOF;
     char cur_symbol = (char)fgetc(stream_in);
 
@@ -33,54 +33,54 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
     {
         switch (unzipping_state)
         {
-        case START:
+        case UNZIPPING_STATE_START:
         {
             if (cur_symbol != '(')
-                return INCORRECT;
+                return ERROR_INCORRECT;
 
-            unzipping_state = OPEN_BRAKET;
+            unzipping_state = UNZIPPING_STATE_OPEN_BRAKET;
             break;
         }
 
-        case OPEN_BRAKET:
+        case UNZIPPING_STATE_OPEN_BRAKET:
         {
             if (!isdigit(cur_symbol))
-                return INCORRECT;
+                return ERROR_INCORRECT;
 
-            unzipping_state = SYMBOL_COUNT;
+            unzipping_state = UNZIPPING_STATE_SYMBOL_COUNT;
             break;
         }
 
-        case SYMBOL_COUNT:
+        case UNZIPPING_STATE_SYMBOL_COUNT:
         {
             if (cur_symbol == ')')
-                unzipping_state = CLOSE_BRAKET;
+                unzipping_state = UNZIPPING_STATE_CLOSE_BRAKET;
             else if (!isdigit(cur_symbol))
-                return INCORRECT;
+                return ERROR_INCORRECT;
                 
             if (count_symbol_size > MAX_SYMBOL_COUNT_LEN)
-                return INCORRECT;
+                return ERROR_INCORRECT;
             count_symbol_buf[count_symbol_size++] = prev_symbol;
 
             break;
         }
 
-        case CLOSE_BRAKET:
+        case UNZIPPING_STATE_CLOSE_BRAKET:
         {
-            unzipping_state = SYMBOL;
+            unzipping_state = UNZIPPING_STATE_SYMBOL;
 
             break;
         }
 
-        case SYMBOL:
+        case UNZIPPING_STATE_SYMBOL:
         {
-            unzipping_state = OPEN_BRAKET;
+            unzipping_state = UNZIPPING_STATE_OPEN_BRAKET;
             
             char symbol = prev_symbol;
 
             size_t count_symbol = (size_t)atol(count_symbol_buf);
             if (count_symbol == 0)
-                return FAILURE;
+                return ERROR_FAILURE;
             
             memset(count_symbol_buf, '\0', count_symbol_size);
             count_symbol_size = 0;
@@ -88,7 +88,7 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
             for (size_t i = 0; i < count_symbol; ++i)
             {
                 if (fprintf(stream_out, "%c", symbol) <= 0)
-                    return FAILURE;
+                    return ERROR_FAILURE;
             }
             break;
         }
@@ -104,5 +104,5 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
 
     //TODO - обработка последнего символа
 
-    return SUCCESS;
+    return ERROR_SUCCESS;
 }

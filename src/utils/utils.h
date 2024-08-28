@@ -4,9 +4,9 @@
 
 enum ErrorCode
 {
-    SUCCESS,
-    FAILURE,
-    INCORRECT
+    ERROR_SUCCESS,
+    ERROR_FAILURE,
+    ERROR_INCORRECT
 };
 
 

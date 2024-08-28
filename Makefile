@@ -6,7 +6,7 @@ BUILD_DIR = ./build
 SRC_DIR = ./src
 COMPILER = gcc
 
-debug_ = 1
+DEBUG_ = 1
 
 FLAGS = -ggdb3 -O0 -Wall -Wextra -Waggressive-loop-optimizations \
 		-Wmissing-declarations -Wcast-align -Wcast-qual -Wchar-subscripts \
@@ -27,14 +27,14 @@ FLAGS = -ggdb3 -O0 -Wall -Wextra -Waggressive-loop-optimizations \
 
 DEBUG_FLAGS = -D _DEBUG
 RELEASE_FLAGS = -DNDEBUG
-FLAGS += $(if $(debug_),$(DEBUG_FLAGS),$(RELEASE_FLAGS))
+FLAGS += $(if $(DEBUG_),$(DEBUG_FLAGS),$(RELEASE_FLAGS))
 
 
-DIRS = streams utils zipping unzipping
+DIRS = streams utils zipping unzipping mode
 BUILD_DIRS = $(DIRS:%=$(BUILD_DIR)/%)
 
 
-SOURCES = main.c streams/streams.c zipping/zipping.c unzipping/unzipping.c
+SOURCES = main.c streams/streams.c zipping/zipping.c unzipping/unzipping.c mode/mode.c
 
 SOURCES_REL_PATH = $(SOURCES:%=$(SRC_DIR)/%)
 OBJECTS_REL_PATH = $(SOURCES:%.c=$(BUILD_DIR)/%.o)
@@ -77,3 +77,9 @@ clean_obj:
 
 clean_deps:
 	rm -rf ./$(DEPS_REL_PATH)
+
+clean_txt:
+	rm -rf ./*.txt
+
+clean_bin:
+	rm -rf ./*.bin

@@ -18,7 +18,7 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
         if (cur_symbol != prev_symbol)
         {
             if (fprintf(stream_out, "(%u)%c", symbol_count, prev_symbol) <= 0)
-                return FAILURE;
+                return ERROR_FAILURE;
 
             symbol_count = 1;
         }
@@ -28,5 +28,5 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
         }
         prev_symbol = cur_symbol;
     }
-    return ferror(stream_in) ? FAILURE : SUCCESS;
+    return ferror(stream_in) ? ERROR_FAILURE : ERROR_SUCCESS;
 }

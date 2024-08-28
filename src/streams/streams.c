@@ -15,40 +15,34 @@ enum ErrorCode open_streams(FILE** const stream_in, FILE** const stream_out)
 
     char filename_in[MAX_FILENAME_LEN] = {};
     if (scanf("%s", filename_in) != 1)
-        return FAILURE;
+        return ERROR_FAILURE;
     
     if (!(*stream_in = fopen(filename_in, "rb")))
-        return FAILURE;
+        return ERROR_FAILURE;
 
 
-#define KWORD_NOT_OUTPUT_NAME "__NOT__"
-
-    printf("Enter the output file name or "
-           KWORD_NOT_OUTPUT_NAME
-           " if you want create new file with input filename: ");
+    printf("Enter the output file name or: ");
 
     char filename_out[MAX_FILENAME_LEN] = {};
     if (scanf("%s", filename_out) != 1)
-        return FAILURE;
+        return ERROR_FAILURE;
 
-    if (!(*stream_out = fopen(!strcmp(filename_out, KWORD_NOT_OUTPUT_NAME)
-                              ? strcat(filename_in, ".bin")
-                              : filename_out, "wb")))
-        return FAILURE;
+    if (!(*stream_out = fopen(filename_out, "wb")))
+        return ERROR_FAILURE;
     
 
-    return SUCCESS;
+    return ERROR_SUCCESS;
 }
 
 enum ErrorCode close_streams(FILE** const stream_in, FILE** const stream_out)
 {
     if (*stream_in && fclose(*stream_in))
-        return FAILURE;
+        return ERROR_FAILURE;
     *stream_in = NULL;
     
     if (*stream_out && fclose(*stream_out))
-        return FAILURE;
+        return ERROR_FAILURE;
     *stream_out = NULL;
     
-    return SUCCESS;
+    return ERROR_SUCCESS;
 }
