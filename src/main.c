@@ -10,6 +10,8 @@
 
 // #define ZIP
 
+//TODO - rename project
+
 int main()
 {
     FILE* stream_in = NULL, *stream_out = NULL;
@@ -46,7 +48,7 @@ int main()
 
 #endif /* ZIP */
 
-    if (close_streams(stream_in, stream_out) == FAILURE)
+    if (close_streams(&stream_in, &stream_out) == FAILURE)
     {
         fprintf(stderr, "CLOSE FAILURE\n");
         return -1;

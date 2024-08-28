@@ -57,10 +57,9 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
                 unzipping_state = CLOSE_BRAKET;
             else if (!isdigit(cur_symbol))
                 return INCORRECT;
-
+                
             if (count_symbol_size > MAX_SYMBOL_COUNT_LEN)
                 return INCORRECT;
-
             count_symbol_buf[count_symbol_size++] = prev_symbol;
 
             break;
@@ -68,13 +67,7 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
 
         case CLOSE_BRAKET:
         {
-            if (cur_symbol != '(')
-                return INCORRECT;
-
             unzipping_state = SYMBOL;
-
-            memset(count_symbol_buf, 0, count_symbol_size);
-            count_symbol_size = 0;
 
             break;
         }
@@ -85,9 +78,12 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
             
             char symbol = prev_symbol;
 
-            size_t count_symbol = atol(count_symbol_buf);
+            size_t count_symbol = (size_t)atol(count_symbol_buf);
             if (count_symbol == 0)
                 return FAILURE;
+            
+            memset(count_symbol_buf, '\0', count_symbol_size);
+            count_symbol_size = 0;
             
             for (size_t i = 0; i < count_symbol; ++i)
             {
@@ -105,4 +101,8 @@ enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
         prev_symbol = cur_symbol;
         cur_symbol = (char)fgetc(stream_in);
     }
+
+    //TODO - обработка последнего символа
+
+    return SUCCESS;
 }

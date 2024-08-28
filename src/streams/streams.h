@@ -8,6 +8,6 @@
 
 enum ErrorCode open_streams(FILE** const stream_in, FILE** const stream_out);
 
-enum ErrorCode close_streams(FILE* stream_in, FILE* stream_out);
+enum ErrorCode close_streams(FILE** const stream_in, FILE** const stream_out);
 
 #endif /* SRC_OPEN_H */

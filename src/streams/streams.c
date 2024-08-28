@@ -3,7 +3,7 @@
 
 #include "streams.h"
 
-enum ErrorCode open_streams(FILE**const stream_in, FILE**const stream_out)
+enum ErrorCode open_streams(FILE** const stream_in, FILE** const stream_out)
 {
     assert(stream_in);
     assert(stream_out);
@@ -40,15 +40,15 @@ enum ErrorCode open_streams(FILE**const stream_in, FILE**const stream_out)
     return SUCCESS;
 }
 
-enum ErrorCode close_streams(FILE* stream_in, FILE* stream_out)
+enum ErrorCode close_streams(FILE** const stream_in, FILE** const stream_out)
 {
-    if (stream_in && fclose(stream_in))
+    if (*stream_in && fclose(*stream_in))
         return FAILURE;
-    stream_in = NULL;
+    *stream_in = NULL;
     
-    if (stream_out && fclose(stream_out))
+    if (*stream_out && fclose(*stream_out))
         return FAILURE;
-    stream_out = NULL;
+    *stream_out = NULL;
     
     return SUCCESS;
 }
