@@ -1,6 +1,6 @@
 .PHONY: all clean
 
-PROJECT_NAME = archiver_lde
+PROJECT_NAME = archiver_rle
 
 BUILD_DIR = ./build
 SRC_DIR = ./src
