@@ -106,3 +106,26 @@ enum ErrorCode unzipping2(FILE* stream_in, FILE* stream_out)
 
     return ERROR_SUCCESS;
 }
+
+enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out) 
+{
+    assert(stream_in);
+    assert(stream_out);
+
+    unsigned char count = (unsigned char)fgetc(stream_in);
+    char symbol = (char)fgetc(stream_in);
+
+    while (!feof(stream_in) && !ferror(stream_in))
+    {
+        for (unsigned char i = 0; i < count; ++i)
+        {
+            if (putc(symbol, stream_out) <= 0)
+                return ERROR_FAILURE;
+        }
+
+        count = (unsigned char)fgetc(stream_in);
+        symbol = (char)fgetc(stream_in);
+    }
+
+    return ferror(stream_in) ? ERROR_FAILURE : ERROR_SUCCESS;
+}
