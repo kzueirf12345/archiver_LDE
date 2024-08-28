@@ -15,7 +15,7 @@ enum UnzippingState
     UNZIPPING_STATE_SYMBOL
 };
 
-enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out)
+enum ErrorCode unzipping2(FILE* stream_in, FILE* stream_out)
 {
     assert(stream_in);
     assert(stream_out);

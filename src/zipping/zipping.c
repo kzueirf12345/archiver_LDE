@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <string.h>
 
-enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
+enum ErrorCode zipping2(FILE* stream_in, FILE* stream_out)
 {
     assert(stream_in);
     assert(stream_out);
@@ -30,3 +30,4 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
     }
     return ferror(stream_in) ? ERROR_FAILURE : ERROR_SUCCESS;
 }
+

@@ -5,7 +5,7 @@
 
 #include "../utils/utils.h"
 
-enum ErrorCode zipping(FILE* stream_in, FILE* stream_out);
+enum ErrorCode zipping2(FILE* stream_in, FILE* stream_out);
 
 
 #endif /* SRC_ZIPPING_H */

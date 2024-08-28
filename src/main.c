@@ -23,7 +23,7 @@ int main()
     enum Mode mode = change_mode();
     if (mode == MODE_ZIP)
     {
-        if (zipping(stream_in, stream_out) == ERROR_FAILURE)
+        if (zipping2(stream_in, stream_out) == ERROR_FAILURE)
         {
             fprintf(stderr, "ZIPPING FAILURE\n");
             return -1;
@@ -31,7 +31,7 @@ int main()
     }
     else if (mode == MODE_UNZIP)
     {
-        enum ErrorCode unzipping_code = unzipping(stream_in, stream_out);
+        enum ErrorCode unzipping_code = unzipping2(stream_in, stream_out);
         if (unzipping_code == ERROR_FAILURE)
         {
             fprintf(stderr, "ZIPPING FAILURE\n");
