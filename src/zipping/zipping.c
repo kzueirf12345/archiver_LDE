@@ -1,9 +1,10 @@
-#include "zipping.h"
-
 #include <assert.h>
 #include <string.h>
 
-enum ErrorCode zipping2(FILE* stream_in, FILE* stream_out)
+#include "zipping.h"
+
+
+enum ErrorCode zipping2_achtung(FILE* stream_in, FILE* stream_out)
 {
     assert(stream_in);
     assert(stream_out);
@@ -37,7 +38,7 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
     assert(stream_out);
 
 
-    char prev_symbol = EOF;
+    char prev_symbol = 0;
     char cur_symbol = (char)fgetc(stream_in);
 
 
@@ -60,6 +61,14 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
 
             repeat_count = REPEAT;
 
+            if (norepeat_count == 126)
+            { 
+                if (fprintf(stream_out, "%c%s", norepeat_count, norepeat_buf) <= 0)
+                    return ERROR_FAILURE;
+                memset(norepeat_buf, 0, norepeat_count);
+                norepeat_count = NOREPEAT;
+            }
+
             norepeat_buf[norepeat_count++] = cur_symbol;
         }
         else
@@ -70,6 +79,13 @@ enum ErrorCode zipping(FILE* stream_in, FILE* stream_out)
             memset(norepeat_buf, 0, norepeat_count);
             norepeat_buf[0] = cur_symbol;
             norepeat_count = NOREPEAT + 1;
+
+            if (repeat_count - REPEAT == 126)
+            { 
+                if (fprintf(stream_out, "%c%c", repeat_count - 1, prev_symbol) <= 0)
+                    return ERROR_FAILURE;
+                repeat_count =  REPEAT + 1;
+            }
 
             ++repeat_count;
         }

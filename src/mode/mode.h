@@ -1,8 +1,6 @@
 #ifndef SRC_MODE_H
 #define SRC_MODE_H
 
-#include <stdbool.h>
-
 enum Mode
 {
     MODE_ZIP,

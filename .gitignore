@@ -62,3 +62,5 @@ doxygen
 
 *.txt
 *.bin
+
+sources_texts.not_delete

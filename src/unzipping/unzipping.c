@@ -6,6 +6,10 @@
 
 #include "unzipping.h"
 
+// TODO vprintf
+//log(INFO, "unzipping_achtung(%p, %p)", stream_in, stream_out); 
+// TODO line number, filename, time, log level
+
 enum UnzippingState
 {
     UNZIPPING_STATE_START,
@@ -15,16 +19,16 @@ enum UnzippingState
     UNZIPPING_STATE_SYMBOL
 };
 
-enum ErrorCode unzipping2(FILE* stream_in, FILE* stream_out)
+#define MAX_SYMBOL_COUNT_LEN_ 10
+
+
+enum ErrorCode unzipping2_achtung(FILE* stream_in, FILE* stream_out) // FIXME
 {
     assert(stream_in);
     assert(stream_out);
 
-
-#define MAX_SYMBOL_COUNT_LEN 10
-
     size_t count_symbol_size = 0;
-    char count_symbol_buf[MAX_SYMBOL_COUNT_LEN] = {};
+    char count_symbol_buf[MAX_SYMBOL_COUNT_LEN_] = {};
     enum UnzippingState unzipping_state = UNZIPPING_STATE_START;
     char prev_symbol = EOF;
     char cur_symbol = (char)fgetc(stream_in);
@@ -58,7 +62,7 @@ enum ErrorCode unzipping2(FILE* stream_in, FILE* stream_out)
             else if (!isdigit(cur_symbol))
                 return ERROR_INCORRECT;
                 
-            if (count_symbol_size > MAX_SYMBOL_COUNT_LEN)
+            if (count_symbol_size > MAX_SYMBOL_COUNT_LEN_)
                 return ERROR_INCORRECT;
             count_symbol_buf[count_symbol_size++] = prev_symbol;
 
@@ -106,6 +110,7 @@ enum ErrorCode unzipping2(FILE* stream_in, FILE* stream_out)
 
     return ERROR_SUCCESS;
 }
+#undef MAX_SYMBOL_COUNT_LEN_
 
 enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out) 
 {
