@@ -5,6 +5,8 @@
 
 enum ErrorCode open_streams(FILE** const stream_in, FILE** const stream_out)
 {
+    logg(LOG_LEVEL_DETAILS_INFO, "Open function. stream_in:%p, stream_out:%p", 
+         stream_in, stream_out);
     assert(stream_in);
     assert(stream_out);
 
@@ -17,7 +19,7 @@ enum ErrorCode open_streams(FILE** const stream_in, FILE** const stream_out)
     if (scanf("%s", filename_in) != 1)
         return ERROR_FAILURE;
     
-    if (!(*stream_in = fopen(filename_in, "rb")))
+    if (!(*stream_in = fopen(filename_in, "rb"))) // TODO perror
         return ERROR_FAILURE;
 
 

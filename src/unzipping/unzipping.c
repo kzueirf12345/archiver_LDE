@@ -22,7 +22,7 @@ enum UnzippingState
 #define MAX_SYMBOL_COUNT_LEN_ 10
 
 
-enum ErrorCode unzipping2_achtung(FILE* stream_in, FILE* stream_out) // FIXME
+enum ErrorCode unzipping2_achtung(FILE* stream_in, FILE* stream_out)
 {
     assert(stream_in);
     assert(stream_out);
@@ -111,6 +111,7 @@ enum ErrorCode unzipping2_achtung(FILE* stream_in, FILE* stream_out) // FIXME
     return ERROR_SUCCESS;
 }
 #undef MAX_SYMBOL_COUNT_LEN_
+
 
 enum ErrorCode unzipping(FILE* stream_in, FILE* stream_out) 
 {
