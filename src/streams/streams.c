@@ -7,9 +7,9 @@ enum ErrorCode open_streams(FILE** const stream_in, FILE** const stream_out)
 {
     logg(LOG_LEVEL_DETAILS_INFO, "Open function. stream_in:%p, stream_out:%p", 
          stream_in, stream_out);
-    assert(stream_in);
-    assert(stream_out);
-
+         
+    lassert(stream_in);
+    lassert(stream_out);
 
     printf("Enter the input file name: ");
 

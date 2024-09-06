@@ -7,7 +7,6 @@
 int main()
 {
     init_logger();
-    set_logout_file("logout2.log");
     set_level_details(LOG_LEVEL_DETAILS_ALL);
 
     FILE* stream_in = NULL, *stream_out = NULL;
